@@ -28,7 +28,7 @@ Nhóm 3 thành viên chia việc song song theo từng checkpoint (CP1–CP5) đ
 - **Độ nhạy & điểm gãy:** Top 3 yếu tố nhạy nhất là **1. Làm lại (`+51,8%`) · 2. Xem lại (`+40,7%`) · 3. Lương nhân viên (`+23,1%`)** (`simulated`). Giới hạn **2 lần chạy** rẻ nhất cho cả hệ thống (`6.901.220 đ`), khác với CPS thấp nhất ở 1 lần (`4.111 đ`). Xem lại 100% đẩy CPS lên **11.743 đ (`0,98×`)** (9 phút làm lại) đến **12.415 đ (`1,03×`)** (15,3 phút thực tế, `simulated`).
 - **Chỉ số đợt chạy thử (chưa có đối chứng):** chính **82,83%** (`994/1.200`), bỏ qua gợi ý **27,12%** (`48/177`), mở lại 7 ngày **4,25%** (`51/1.200`).
 - **Đề xuất cuối ([ho_so_launch_v0.md](ho_so_launch_v0.md)):** **Go có điều kiện** cho pilot `noi_dia + hang_nang` với 4 điều kiện có người phụ trách và ngày kiểm tra (sửa ca 7 & 20; ký chấp nhận MDE 6 điểm / power `0,64` ở mức 5 điểm; bật đủ 11 event `trace_id` thay số `simulated` sau tuần 1; có lộ trình giảm xem lại theo bậc).
-- **Kết quả duyệt chéo Gate 2a:** *(nhóm cập nhật điểm và nhận xét nhận được từ hội đồng sau phiên duyệt chéo 17:00–17:45; phiếu nhóm mình chấm nhóm khác nằm tại [phieu_cham.md](phieu_cham.md)).*
+- **Kết quả duyệt chéo Gate 2a:** Hội đồng nhóm **K5-L3B-404** chấm **30/30 điểm** (C6: `10/10`, C7: `10/10`, C8: `10/10`) với quyết định **`Go có điều kiện`** (ghi nhận trình bày nhất quán với bằng chứng, nêu rõ con số bất lợi và nhãn `simulated`; câu hỏi phản biện tập trung vào lý do chọn MDE `6` điểm thay cho `5` điểm và đánh đổi power `~0,64`). Phiếu nhóm mình chấm nhóm 404 (`20/30`, `Go có điều kiện`) nằm tại [phieu_cham.md](phieu_cham.md).
 
 ## 5. Khó khăn và cách xử lý
 

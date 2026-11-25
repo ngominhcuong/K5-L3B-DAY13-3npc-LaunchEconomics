@@ -5,7 +5,7 @@
 - Tên nhóm: 3npc
 - Lớp: L3B
 - Repo nhóm: `K5-L3B-DAY13-3npc-LaunchEconomics` (xem [SUBMISSION.md](SUBMISSION.md))
-- URL repo, nhánh nộp, commit chốt: `https://github.com/ngominhcuong/K5-L3B-DAY13-3npc-LaunchEconomics`, nhánh `main` (commit chốt cập nhật khi đóng gói)
+- URL repo, nhánh nộp, commit chốt: `https://github.com/ngominhcuong/K5-L3B-DAY13-3npc-LaunchEconomics`, nhánh `main` (PR đóng gói cuối sau `0e5007d`)
 
 ## Thành viên
 
@@ -77,7 +77,8 @@ Ví dụ: `report/team/20241234_NguyenVanAn.md`.
 - Tổng hợp thông tin nhóm/thành viên vào `TEAM.md` và cập nhật xuyên suốt 7 mục + đề xuất `Go có điều kiện` trong `report/team/ho_so_launch_v0.md`.
 - Gắn nhãn độc lập 20 ca lỗi (`Nhãn người 2`), đối chiếu đồng thuận 20/20 (100%) và soát vai trò phụ trách trong `report/team/bang_loi.md`.
 - Điền D1, D2, đánh đổi và các trường cấu hình pilot trong `report/team/pilot_plan.yaml`.
+- Trình bày chính 1 phút bảo vệ hồ sơ trước hội đồng `K5-L3B-404` (đạt `30/30`), chấm chéo C6 & tổng hợp `report/team/phieu_cham.md`, hoàn thiện kết quả duyệt chéo trong `report/team/group_report.md` và báo cáo cá nhân `report/team/2A202603962_TranQuangHa.md`.
 
 ### Bằng chứng
 
-- Commit `8ee8140`, `382689f`, `5001163`, `e827c23` (và commit CP5 + báo cáo cá nhân/duyệt chéo cuối buổi).
+- Commit `8ee8140`, `382689f`, `5001163`, `e827c23`, `e9d5cfb`, `66336ab`, `698db7e` (và PR đóng gói cuối).

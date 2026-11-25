@@ -25,18 +25,20 @@
 
 ## 4. Bằng chứng
 
-- Các file đóng góp trực tiếp: `TEAM.md`, `report/team/ho_so_launch_v0.md`, `report/team/bang_loi.md`, `report/team/pilot_plan.yaml`, `report/team/2A202603962_TranQuangHa.md`.
+- Các file đóng góp trực tiếp: `TEAM.md`, `report/team/ho_so_launch_v0.md`, `report/team/bang_loi.md`, `report/team/pilot_plan.yaml`, `report/team/phieu_cham.md`, `report/team/group_report.md`, `report/team/2A202603962_TranQuangHa.md`.
 - Các commit trên nhánh `main`:
   - `8ee8140` — CP1: cập nhật Mục 1 và Mục 3 trong `report/team/ho_so_launch_v0.md`.
   - `382689f` — CP2: cập nhật Mục 2 trong `report/team/ho_so_launch_v0.md`.
   - `5001163` — CP3: hoàn thiện đồng thuận 20/20 trong `report/team/bang_loi.md` và Mục 5 trong `report/team/ho_so_launch_v0.md`.
   - `e827c23` — CP4: điền D1–D2, đánh đổi và cấu hình `report/team/pilot_plan.yaml` + Mục 6 trong `report/team/ho_so_launch_v0.md`.
   - `e9d5cfb` — CP5: hoàn thiện 7 mục + đề xuất `Go có điều kiện` trong `report/team/ho_so_launch_v0.md` và điền `TEAM.md`.
+  - `66336ab` — Báo cáo cá nhân `report/team/2A202603962_TranQuangHa.md`.
+  - `698db7e` — Gate 2a: hoàn thiện phiếu chấm nhóm 404 trong `report/team/phieu_cham.md` (`20/30`, `Go có điều kiện`).
 
 ## 5. Công cụ AI đã dùng
 
 - **Công cụ:** Antigravity (trợ lý AI trong IDE).
-- **Mục đích sử dụng:** Tóm tắt hướng dẫn lab, đối chiếu quy trình theo `plan.md`, hỗ trợ rà soát số liệu và định dạng các file hồ sơ (`ho_so_launch_v0.md`, `pilot_plan.yaml`, `TEAM.md`), gợi ý phân tích ranh giới 5 loại lỗi Google PAIR ở CP3 và soạn báo cáo cá nhân.
+- **Mục đích sử dụng:** Tóm tắt hướng dẫn lab, đối chiếu quy trình theo `plan.md`, hỗ trợ rà soát số liệu và định dạng các file hồ sơ (`ho_so_launch_v0.md`, `pilot_plan.yaml`, `TEAM.md`, `phieu_cham.md`), gợi ý phân tích ranh giới 5 loại lỗi Google PAIR ở CP3 và soạn báo cáo cá nhân.
 - **Cách tự kiểm tra kết quả:**
   - Tự thiết lập môi trường `src/.venv` trên Windows PowerShell và chạy trực tiếp `python lab13.py` để xác minh toàn bộ output A1–A4 (`1.20 · 1.25 · 1.25`), B1–B4, D1 và E1 khớp với số liệu nhóm đã đưa vào hồ sơ.
   - Kiểm tra `pilot_plan.yaml` bằng `yaml.safe_load` và kiểm chứng power (`0.642` ở `n = 859`) qua `statsmodels`.
@@ -44,6 +46,6 @@
 
 ## 6. Tự đánh giá
 
-- Hoàn thành đúng tiến độ toàn bộ các mốc từ Mốc 0 đến CP5 theo `plan.md`, giữ luồng làm việc tách nhánh/tạo Pull Request sạch sẽ không gây conflict với hai thành viên còn lại.
-- Nắm vững bức tranh kinh tế của agent (giờ nhân viên chiếm `92,5%` tổng chi phí, xem lại 100% có thể làm chi phí tiệm cận hoặc vượt `12.000 đ/việc`), lý do thu hẹp phạm vi pilot về `noi_dia + hang_nang` và cách trình bày minh bạch các đánh đổi bất lợi (power `0,64`, lỗi ca 7/20, số `simulated`) khi bảo vệ trước hội đồng Gate 2a.
-- Điểm cần tiếp tục hoàn thiện ở phần cuối buổi: ghi nhận đầy đủ kết quả chấm chéo vào `report/team/phieu_cham.md`, cập nhật phản hồi của hội đồng vào `report/team/group_report.md` và bổ sung `commit chốt` vào `TEAM.md` trước khi nộp link lên LMS.
+- Hoàn thành đúng tiến độ toàn bộ các mốc từ Mốc 0 đến CP5 và phiên duyệt chéo Gate 2a theo `plan.md`, giữ luồng làm việc tách nhánh/tạo Pull Request sạch sẽ không gây conflict với hai thành viên còn lại.
+- Nắm vững bức tranh kinh tế của agent (giờ nhân viên chiếm `92,5%` tổng chi phí, xem lại 100% có thể làm chi phí tiệm cận hoặc vượt `12.000 đ/việc`), lý do thu hẹp phạm vi pilot về `noi_dia + hang_nang` và trình bày bảo vệ thành công bộ hồ sơ trước hội đồng `K5-L3B-404` đạt **30/30 điểm (`Go có điều kiện`)**.
+- Đã hoàn tất cập nhật kết quả duyệt chéo vào `report/team/phieu_cham.md`, `report/team/group_report.md` và `TEAM.md` để sẵn sàng đóng gói nộp bài lên LMS.
