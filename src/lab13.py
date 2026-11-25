@@ -251,3 +251,13 @@ if __name__ == '__main__':
     mo_lai_pilot = sub_pilot['mo_lai_trong_7_ngay'].mean() * 100
     print(f"  Tỉ lệ mở lại trong 7 ngày hiện tại:  toàn mẫu {mo_lai_all:.2f}% ({int(reqs['mo_lai_trong_7_ngay'].sum())}/{len(reqs)}), "
           f"phạm vi pilot {mo_lai_pilot:.2f}% ({int(sub_pilot['mo_lai_trong_7_ngay'].sum())}/{len(sub_pilot)})")
+
+    # ---------- CP5 · E1: Tính thử ba chỉ số ----------
+    print('\n=== E1 · Tính thử ba chỉ số trên 1.200 yêu cầu ===')
+    chinh_n = int(((reqs['dong_trong_24h'] == 1) & (reqs['mo_lai_trong_7_ngay'] == 0)).sum())
+    xem_df = reqs[reqs['duoc_xem_lai'] == 1]
+    bo_qua_n = int(xem_df['quyet_dinh_xem_lai'].isin(['sua', 'bo']).sum())
+    an_toan_n = int((reqs['mo_lai_trong_7_ngay'] == 1).sum())
+    print(f"  Chỉ số chính (đóng 24h, không mở lại 7d): {chinh_n / len(reqs) * 100:.2f}% ({chinh_n}/{len(reqs)})")
+    print(f"  Chỉ số dùng (tỉ lệ bỏ qua gợi ý):        {bo_qua_n / len(xem_df) * 100:.2f}% ({bo_qua_n}/{len(xem_df)})")
+    print(f"  Chỉ số an toàn (mở lại trong 7 ngày):     {an_toan_n / len(reqs) * 100:.2f}% ({an_toan_n}/{len(reqs)})")
