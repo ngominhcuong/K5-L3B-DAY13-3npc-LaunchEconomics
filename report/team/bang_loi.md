@@ -4,7 +4,7 @@
 
 ## Hai bộ nhãn độc lập
 
-Người gắn nhãn 1: Data/QA · Người gắn nhãn 2: PM/Doc (gắn trong 8 phút, không trao đổi)
+Người gắn nhãn 1: Đoàn Trí Hùng · Người gắn nhãn 2: Trần Quang Hà (gắn trong 8 phút, không trao đổi)
 
 | Ca | Nhãn người 1 | Nhãn người 2 | Trùng? | Nhãn thống nhất |
 | --: | --- | --- | --- | --- |
@@ -46,5 +46,5 @@ Cách phát hiện phải đo được (event, ngưỡng, tần suất). Ngườ
 | 9 | Do người dùng | Event `input_validation_failed`; cảnh báo khi > 2% số yêu cầu/ngày | Nhận diện mã sàn TMĐT và tra sang mã vận đơn; không tra được thì hướng dẫn kèm ảnh mẫu | PM trợ lý hoàn phí |
 | 7 | Hệ thống | Đối soát mỗi giờ: tin nhắn "đã hoàn" không có bản ghi `refund_ledger_write` ok cùng `trace_id`; ngưỡng 0 ca | Chỉ báo "đã hoàn" khi sổ cái trả ok; lỗi 503 sau 3 lần thì báo "đang xử lý" và chuyển nhân viên | Kỹ sư trưởng agent |
 | 18 | Ngữ cảnh | Tỉ lệ `ticket_reopened` vì thắc mắc số tiền dù kiểm tra tính đúng, theo dõi theo tuần (> 2%) | Mẫu tin nhắn luôn ghi rõ cách tính (ví dụ: `30.000 đ × 50% = 15.000 đ`) | Trưởng nhóm CSKH |
-| 4 | Giới hạn hệ thống | Event `handoff_to_staff` với `reason = thieu_du_lieu`, theo dõi theo loại yêu cầu hằng tuần | Giữ luồng chuyển nhân viên kèm tóm tắt; loại `quoc_te` ra khỏi phạm vi pilot | PM trợ lý hoàn phí |
-| 17 | Ngầm | `audit_sample_checked` kiểm tra mẫu 100 đơn/tuần so với bảng giá hiện hành; ngưỡng > 1% đơn lệch | Xoá bộ nhớ đệm khi có bảng giá mới và ghi phiên bản bảng giá vào `trace_id` | Kế toán trưởng |
+| 4 | Giới hạn hệ thống | Event `handoff_to_staff` với `reason = thieu_du_lieu`, theo dõi theo loại yêu cầu hằng tuần; cảnh báo khi > 5% yêu cầu trong phạm vi pilot | Giữ luồng chuyển nhân viên kèm tóm tắt; loại `quoc_te` ra khỏi phạm vi pilot | PM trợ lý hoàn phí |
+| 17 | Ngầm | `audit_sample_checked` kiểm tra mẫu 100 đơn/tuần so với bảng giá hiện hành; ngưỡng > 1% đơn lệch | Xoá bộ nhớ đệm khi có bảng giá mới và ghi thuộc tính `pricing_version` vào trace (gắn cùng `trace_id`) | Kế toán trưởng |
