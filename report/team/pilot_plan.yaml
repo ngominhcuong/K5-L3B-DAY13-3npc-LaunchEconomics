@@ -44,11 +44,11 @@ pilot:
     spillover_risk: "Trung bình (cùng depot); giảm bằng phân quyền tài khoản riêng và log mở trợ lý theo staff_id"
     predeclared: "Có: chỉ số chính, MDE 0.06, ngưỡng dừng và ngày quyết định chốt trước ngày chạy"
   stop_rules:
-    - "NẾU ? TRONG ? THÌ ? KHÔNG THÌ ?"
-    - "NẾU ? TRONG ? THÌ ? KHÔNG THÌ ?"
-    - "NẾU ? TRONG ? THÌ ? KHÔNG THÌ ?"
+    - "NẾU tỉ lệ mở lại 7 ngày của nhóm trợ lý cao hơn nhóm đối chứng >= 2 điểm phần trăm hoặc vượt trần 6%, hoặc phát sinh >= 1 ca hoàn trùng TRONG 3 ngày liên tiếp THÌ Giám đốc vận hành LogiX-VN tắt trợ lý trong 30 phút KHÔNG THÌ không được chuyển sang bước rollout tiếp theo"
+    - "NẾU chi phí mỗi việc thành công vượt 8.000 đ TRONG 2 tuần liên tiếp THÌ PM trợ lý hoàn phí thu hẹp phạm vi về chỉ noi_dia và giới hạn tối đa 2 lần chạy KHÔNG THÌ không được mở rộng thêm hang_nang"
+    - "NẾU tỉ lệ bỏ qua gợi ý (sua + bo) vượt 40% TRONG 1 tuần THÌ Trưởng nhóm CSKH phỏng vấn tối thiểu 5 nhân viên và rà 20 trace trong 3 ngày làm việc KHÔNG THÌ không được chuyển sang bước rollout tiếp theo"
   interim_looks: "chỉ kiểm tra chỉ số an toàn hằng ngày/tuần, không kết luận hiệu quả sớm trước decision_date"
-  rollback: "?"                   # ai bấm, mất bao lâu, khách được phục vụ bằng gì
+  rollback: "Giám đốc vận hành LogiX-VN bật cờ tắt trợ lý, hiệu lực trong 30 phút; toàn bộ yêu cầu chuyển tự động về luồng nhân viên CSKH tự xử lý (không gián đoạn khách hàng)"
   decision_date: "2027-01-05"
   simulated_inputs:
     - "CPS toàn mẫu A2: 4.472 đ (simulated; xem lại 1.780.000 đ, làm lại 2.264.000 đ)"
