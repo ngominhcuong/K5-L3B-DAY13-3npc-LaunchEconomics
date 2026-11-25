@@ -11,7 +11,7 @@ Nhóm: 3npc · Lớp: L3B
 | 3 · So với nhân viên tự làm | Cả hệ thống (gồm 222 ca không thành công × 12.000 đ): **5.865 đ/yc = 0,49×** (`simulated`); phạm vi pilot + cố định: **0,38×** (45.000 yc) và **0,48×** (22.500 yc) (`simulated`); loại `quoc_te` (**1,88×**) và `doi_tac` (**0,85×**) | Giả lập | Giám đốc vận hành LogiX-VN |
 | 4 · Chỉ số chính, chỉ số dùng, chỉ số an toàn | ... | ... | ... |
 | 5 · Bảng lỗi và cách khắc phục | Đồng thuận **20/20 (100%)** cho 20 ca lỗi theo 5 loại Google PAIR; bảng khắc phục đủ 5 loại (Ca 9, 7, 18, 4, 17) có phát hiện đo được & 1 vai trò phụ trách; ưu tiên sửa ca 7 & ca 20 trước pilot | Xong, có bằng chứng | PM trợ lý hoàn phí |
-| 6 · Pilot plan | ... | ... | ... |
+| 6 · Pilot plan | Chia theo `staff` (**20+20** cụm, ngẫu nhiên theo depot), phạm vi `noi_dia + hang_nang`; chấp nhận **MDE 6 điểm** (`n = 859`/nhóm, `m ≥ 299` yc/NV, `DE = 6,96`; power còn **~0,64** nếu hiệu ứng thật 5 điểm); đang chờ Thành viên 1 điền `stop_rules` & `rollback` | Chưa | Giám đốc vận hành LogiX-VN |
 | 7 · Rủi ro kinh tế | ... | ... | ... |
 
 **Đề xuất:** Go · Go có điều kiện · No-go (giữ một). Go có điều kiện: ghi từng điều kiện, người phụ trách, ngày kiểm tra. No-go: ghi việc phải làm để quay lại cổng.
