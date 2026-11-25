@@ -132,7 +132,73 @@ if __name__ == '__main__':
         print(f"  {nhan:26s} | TC/tháng: {viec_tc_thang:>8,.0f} | Cố định/việc: {co_dinh_moi_viec:>6,.0f} đ | "
               f"CPS+CĐ: {cps_cong_cd:>6,.0f} đ ({cps_cong_cd / BASELINE:.2f}x) [simulated]")
 
-    # TODO CP2 · Nhiệm vụ B: đổi từng yếu tố, ghi vào bảng độ nhạy.
+    # ---------- CP2 · B1: Đổi từng yếu tố ----------
+    print('\n=== B1 · Bảng độ nhạy (đổi từng yếu tố) ===')
+    kich_ban = {
+        'Giá token gấp đôi':      dict(gia_vao=52, gia_ra=260),
+        'Giá token giảm một nửa': dict(gia_vao=13, gia_ra=65),
+        'Xem lại gấp đôi':        dict(he_so_xem_lai=2.0),
+        'Xem lại giảm một nửa':   dict(he_so_xem_lai=0.5),
+        'Làm lại gấp đôi':        dict(he_so_lam_lai=2.0),
+        'Làm lại giảm một nửa':   dict(he_so_lam_lai=0.5),
+        'Lương tăng 25%':         dict(luong_phut=2500),
+        'Tối đa 2 lần chạy':      dict(max_lan_chay=2),
+        'Chỉ 1 lần chạy':         dict(max_lan_chay=1),
+    }
+    goc = ket_qua['cps']
+    b1_pct = {}
+    print(f"{'Kịch bản':26s} {'CPS [sim]':>10s} {'Thay đổi':>10s}")
+    for ten, kw in kich_ban.items():
+        cps_kb = mo_hinh(runs, reqs, **kw)['cps']
+        pct = (cps_kb / goc - 1) * 100
+        b1_pct[ten] = pct
+        print(f'{ten:26s} {cps_kb:>10,.0f} {pct:>+9.1f}%')
+
+    # Tự kiểm tra tính đối xứng B1: giảm một nửa == -1/2 mức tăng của gấp đôi
+    for goc_ten in ['Giá token', 'Xem lại', 'Làm lại']:
+        tang = b1_pct[f'{goc_ten} gấp đôi']
+        giam = b1_pct[f'{goc_ten} giảm một nửa']
+        assert abs(giam + tang / 2) < 1e-9, f'Lệch đối xứng ở {goc_ten}'
+    print('Kiểm tra đối xứng B1 (giảm nửa = -1/2 gấp đôi): ĐẠT')
+
+    # ---------- CP2 · B2: Đổi một cặp và xếp hạng ----------
+    print('\n=== B2 · Đổi một cặp và xếp hạng ===')
+    cps_cap = mo_hinh(runs, reqs, gia_vao=52, gia_ra=260, he_so_xem_lai=2.0)['cps']
+    pct_cap = (cps_cap / goc - 1) * 100
+    assert abs(pct_cap - (b1_pct['Giá token gấp đôi'] + b1_pct['Xem lại gấp đôi'])) < 1e-9
+    print(f"Token ×2 + Xem lại ×2: {cps_cap:,.0f} đ ({pct_cap:+.1f}%) [simulated] — khớp tổng 2 tác động riêng: ĐẠT")
+    print("Xếp hạng 3 yếu tố nhạy nhất: 1. Số ca làm lại · 2. Tỉ lệ xem lại · 3. Lương nhân viên")
+
+    # ---------- CP2 · B3: Giới hạn chạy lại ----------
+    print('\n=== B3 · Giới hạn chạy lại (chi phí cả hệ thống) ===')
+    print(f"{'Giới hạn':10s} {'Tổng trợ lý':>14s} {'Không TC':>10s} {'Cả hệ thống':>14s} {'CPS [sim]':>10s}")
+    for gioi_han in [1, 2, 3]:
+        kq_gh = mo_hinh(runs, reqs, max_lan_chay=gioi_han)
+        khong_tc_gh = len(reqs) - kq_gh['thanh_cong']
+        ca_he_thong = kq_gh['tong'] + khong_tc_gh * BASELINE
+        print(f"{gioi_han} lần      {kq_gh['tong']:>14,.0f} {khong_tc_gh:>10d} {ca_he_thong:>14,.0f} {kq_gh['cps']:>10,.0f}")
+
+    # ---------- CP2 · B4: Xem lại 100% (noi_dia + hang_nang) ----------
+    print('\n=== B4 · Xem lại 100% (phạm vi noi_dia + hang_nang) ===')
+    runs_pilot = runs[runs['request_id'].isin(sub_pilot['request_id'])]
+    so_yc_co_ok = int(runs_pilot.loc[runs_pilot['status'] == 'ok', 'request_id'].nunique())
+    so_ca_lam_lai = int((sub_pilot['ket_qua'] == 'lam_lai').sum())
+    token_tool_pilot = kq_pilot['token'] + kq_pilot['tool']
+    tc_pilot = kq_pilot['thanh_cong']
+
+    # Theo đề: 5 phút xem lại/ca có ok, 9 phút làm lại/ca lam_lai
+    tien_xem_100 = so_yc_co_ok * 5 * LUONG_PHUT
+    phut_lam_lai_tb = reqs.loc[reqs['ket_qua'] == 'lam_lai', 'phut_lam_lai_simulated'].mean()
+    print(f"Phạm vi: {len(sub_pilot)} yc | Có ≥1 lần ok: {so_yc_co_ok} | Ca làm lại: {so_ca_lam_lai} | "
+          f"Token+Tool: {token_tool_pilot:,.0f} đ | Thành công: {tc_pilot}")
+    for nhan, phut_ll in [('Đề bài (9,0 phút/ca)', 9.0), (f'Thực tế dữ liệu ({phut_lam_lai_tb:.1f} phút/ca)', phut_lam_lai_tb)]:
+        tien_ll = so_ca_lam_lai * phut_ll * LUONG_PHUT
+        tong_b4 = token_tool_pilot + tien_xem_100 + tien_ll
+        cps_b4 = tong_b4 / tc_pilot
+        phut_xem_hoa_von = (BASELINE * tc_pilot - token_tool_pilot - tien_ll) / (so_yc_co_ok * LUONG_PHUT)
+        print(f"  {nhan:32s} | Tổng: {tong_b4:>11,.0f} đ | CPS: {cps_b4:>7,.0f} đ ({cps_b4 / BASELINE:.2f}x) | "
+              f"Hoà vốn xem lại ≤ {phut_xem_hoa_von:.1f} phút [simulated]")
+
     # TODO CP4 · Nhiệm vụ D: cỡ mẫu.
     #   from statsmodels.stats.proportion import proportion_effectsize
     #   from statsmodels.stats.power import NormalIndPower
