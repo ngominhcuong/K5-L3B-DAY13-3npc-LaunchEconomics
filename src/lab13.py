@@ -4,6 +4,7 @@ Không cần khoá API. Điền các chỗ ghi VIẾT Ở ĐÂY (đánh dấu TO
 Bản gốc chưa sửa nằm ở lab13_starter.py.
 """
 import math
+from statistics import NormalDist
 import pandas as pd
 
 # Bảng giá GIẢ ĐỊNH của lab (không phải giá thật của nhà cung cấp nào)
@@ -74,6 +75,31 @@ def mo_hinh(runs, reqs, gia_vao=26, gia_ra=130, gia_tool=15, luong_phut=2000,
         cps=tong / thanh_cong,
         hoa_don_moi_yc=(tien_token.sum() + tien_tool.sum()) / len(reqs),
     )
+
+
+# ---------- Nhiệm vụ D1 · Cỡ mẫu và power cho pilot ----------
+def co_mau(p1, p2, alpha=0.05, power=0.8):
+    """Cỡ mẫu mỗi nhóm cho kiểm định hai tỉ lệ (công thức xấp xỉ chuẩn)."""
+    nd = NormalDist()
+    za, zb = nd.inv_cdf(1 - alpha / 2), nd.inv_cdf(power)
+    pb = (p1 + p2) / 2
+    return math.ceil((za * math.sqrt(2 * pb * (1 - pb))
+                      + zb * math.sqrt(p1 * (1 - p1) + p2 * (1 - p2))) ** 2 / (p2 - p1) ** 2)
+
+
+def tinh_power_hai_ti_le(p1, p2, n, alpha=0.05):
+    """Tính power thực tế cho cỡ mẫu n mỗi nhóm khi chênh lệch thật là p2 - p1."""
+    try:
+        from statsmodels.stats.proportion import proportion_effectsize
+        from statsmodels.stats.power import NormalIndPower
+        es = proportion_effectsize(p2, p1)
+        return float(NormalIndPower().power(effect_size=es, nobs1=n, alpha=alpha, ratio=1.0))
+    except ImportError:
+        nd = NormalDist()
+        pb = (p1 + p2) / 2
+        za = nd.inv_cdf(1 - alpha / 2)
+        zb = (abs(p2 - p1) * math.sqrt(n) - za * math.sqrt(2 * pb * (1 - pb))) / math.sqrt(p1 * (1 - p1) + p2 * (1 - p2))
+        return nd.cdf(zb)
 
 
 if __name__ == '__main__':
@@ -199,6 +225,29 @@ if __name__ == '__main__':
         print(f"  {nhan:32s} | Tổng: {tong_b4:>11,.0f} đ | CPS: {cps_b4:>7,.0f} đ ({cps_b4 / BASELINE:.2f}x) | "
               f"Hoà vốn xem lại ≤ {phut_xem_hoa_von:.1f} phút [simulated]")
 
-    # TODO CP4 · Nhiệm vụ D: cỡ mẫu.
-    #   from statsmodels.stats.proportion import proportion_effectsize
-    #   from statsmodels.stats.power import NormalIndPower
+    # ---------- CP4 · D1: Cỡ mẫu, power và tỉ lệ mở lại hiện tại ----------
+    print('\n=== D1 · Thiết kế cỡ mẫu pilot (baseline=0,70; alpha=0,05; power=0,80; ICC=0,02) ===')
+    baseline, alpha, power, icc = 0.70, 0.05, 0.80, 0.02
+    n_5pt = co_mau(baseline, baseline + 0.05, alpha, power)
+    de_75 = 1 + (75 - 1) * icc
+    n_nv_75 = math.ceil(n_5pt * de_75)
+    so_nv_moi_nhom = math.ceil(n_nv_75 / 75)
+    max_nv_20 = int(20 / icc)
+    max_depot_6 = int(6 / icc)
+    n_6pt = co_mau(baseline, baseline + 0.06, alpha, power)
+    # Giải 20m / (1 + (m - 1) * icc) >= n_6pt  =>  m * (20 - n_6pt * icc) >= n_6pt * (1 - icc)
+    m_min_6pt = math.ceil((n_6pt * (1 - icc)) / (20 - n_6pt * icc))
+    de_6pt = 1 + (m_min_6pt - 1) * icc
+    power_5pt_o_6pt = tinh_power_hai_ti_le(baseline, baseline + 0.05, n_6pt, alpha)
+
+    print(f"  a) Theo yêu cầu (+5 điểm):           {n_5pt:,} yêu cầu/nhóm")
+    print(f"  b) Theo nhân viên (m=75):            DE={de_75:.2f}, cần {n_nv_75:,}/nhóm -> {so_nv_moi_nhom} NV/nhóm (tổng {so_nv_moi_nhom*2} > 40: KHÔNG ĐỦ)")
+    print(f"  c) 20 nhân viên/nhóm:                tối đa {max_nv_20:,} hiệu dụng < {n_5pt:,} (KHÔNG ĐẠT)")
+    print(f"  d) 6 depot/nhóm:                     tối đa {max_depot_6:,} hiệu dụng < {n_5pt:,} (KHÔNG ĐẠT, < 20 cụm)")
+    print(f"  e) Mức chênh 6 điểm ({n_6pt}/nhóm), 20 NV: m >= {m_min_6pt} yc/người (DE={de_6pt:.2f})")
+    print(f"  Power thực tế ở mức 5 điểm (n={n_6pt}): {power_5pt_o_6pt:.2f}")
+
+    mo_lai_all = reqs['mo_lai_trong_7_ngay'].mean() * 100
+    mo_lai_pilot = sub_pilot['mo_lai_trong_7_ngay'].mean() * 100
+    print(f"  Tỉ lệ mở lại trong 7 ngày hiện tại:  toàn mẫu {mo_lai_all:.2f}% ({int(reqs['mo_lai_trong_7_ngay'].sum())}/{len(reqs)}), "
+          f"phạm vi pilot {mo_lai_pilot:.2f}% ({int(sub_pilot['mo_lai_trong_7_ngay'].sum())}/{len(sub_pilot)})")
