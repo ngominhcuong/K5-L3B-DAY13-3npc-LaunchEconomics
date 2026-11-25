@@ -35,8 +35,8 @@
 - **Chính (`% yêu cầu đóng trong 24 giờ và không mở lại trong 7 ngày`):** tính từ `refund_request_created` (tổng yêu cầu & mốc `created_at`) + `ticket_closed` (`closed_at - created_at <= 24h`) + `ticket_reopened` (không phát sinh trong 7 ngày kể từ `closed_at`), nối theo `trace_id` và `request_id`.
 - **Dùng (`Tỉ lệ bỏ qua gợi ý`):** tính từ `staff_review_decision` = số event có `quyet_dinh` là `sua` hoặc `bo` chia cho tổng số event `staff_review_decision`.
 - **An toàn (`Tỉ lệ lỗi lọt đến khách`):** tính từ `ticket_reopened` (phát sinh trong 7 ngày từ `closed_at`) chia cho tổng `refund_request_created`.
-- **Dùng (nhóm tự đề xuất — gợi ý: `% yêu cầu nhóm can thiệp được mở bằng trợ lý`):** tính từ `agent_suggestion_shown` chia cho tổng `refund_request_created` có `arm = treatment`.
-- **An toàn (nhóm tự đề xuất — gợi ý: `% đơn hoàn sai tiền qua kiểm tra mẫu hằng tuần`, bắt lỗi ngầm ca 5 & 17):** tính từ `audit_sample_checked` = số bản ghi có `so_tien_da_hoan != so_tien_dung` chia tổng số đơn được kiểm tra mẫu.
+- **Dùng (nhóm tự đề xuất: `% yêu cầu nhóm can thiệp được mở bằng trợ lý`):** tính từ `agent_suggestion_shown` chia cho tổng `refund_request_created` có `arm = treatment`.
+- **An toàn (nhóm tự đề xuất: `% đơn hoàn sai tiền qua kiểm tra mẫu hằng tuần`, bắt lỗi ngầm ca 5 & 17):** tính từ `audit_sample_checked` = số bản ghi có `so_tien_da_hoan != so_tien_dung` chia tổng số đơn được kiểm tra mẫu.
 - **Bổ trợ đo chi phí thật (thay thế cột `_simulated` sau tuần 1 pilot):** tính từ `agent_run_completed` (`tokens_in`, `tokens_out`, `tool_calls`) + `staff_review_decision` (`phut_xem_lai`) + `staff_rework_completed` (`phut_lam_lai`) nối cùng `trace_id`.
 
 ## E2 · Rủi ro kinh tế
